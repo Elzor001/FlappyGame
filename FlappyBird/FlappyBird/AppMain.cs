@@ -70,7 +70,6 @@ namespace FlappyBird
 			scoreLabel.SetPosition(
 				Director.Instance.GL.Context.GetViewport().Width/2 - scoreLabel.Width/2,
 				Director.Instance.GL.Context.GetViewport().Height*0.1f - scoreLabel.Height/2);
-			scoreLabel.Text = "0";
 			panel.AddChildLast(scoreLabel);
 			uiScene.RootWidget.AddChildLast(panel);
 			UISystem.SetScene(uiScene);
@@ -92,6 +91,7 @@ namespace FlappyBird
 		
 		public static void Update()
 		{
+		scoreLabel.Text = Bird.scoreString;
 			//Determine whether the player tapped the screen
 			var touches = Touch.GetData(0);
 			//If tapped, inform the bird.
@@ -101,11 +101,12 @@ namespace FlappyBird
 			//Update the bird.
 			bird.Update(0.0f);
 			
+			
 			if(bird.Alive)
 			{
 				//Move the background.
 				background.Update(0.0f);
-							
+				
 				//Update the obstacles.
 				foreach(Obstacle obstacle in obstacles)
 					obstacle.Update(0.0f);

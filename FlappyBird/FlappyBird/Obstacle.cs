@@ -89,8 +89,16 @@ namespace FlappyBird
 			return randomPosition;
 		}
 		
+		
 		public bool HasCollidedWith(SpriteUV sprite)
 		{
+			
+			
+			
+			
+			
+			
+			
 			return false;
 		}
 	}

@@ -21,9 +21,11 @@ namespace FlappyBird
 		private static Obstacle[]	obstacles;
 		private static Bird			bird;
 		private static Background	background;
+		//private static Menu 		menu;
 				
 		public static void Main (string[] args)
 		{
+			
 			Initialize();
 			
 			//Game loop
@@ -59,6 +61,7 @@ namespace FlappyBird
 			gameScene = new Sce.PlayStation.HighLevel.GameEngine2D.Scene();
 			gameScene.Camera.SetViewFromViewport();
 			
+			
 			//Set the ui scene.
 			uiScene = new Sce.PlayStation.HighLevel.UI.Scene();
 			Panel panel  = new Panel();
@@ -68,8 +71,8 @@ namespace FlappyBird
 			scoreLabel.HorizontalAlignment = HorizontalAlignment.Center;
 			scoreLabel.VerticalAlignment = VerticalAlignment.Top;
 			scoreLabel.SetPosition(
-				Director.Instance.GL.Context.GetViewport().Width/2 - scoreLabel.Width/2,
-				Director.Instance.GL.Context.GetViewport().Height*0.1f - scoreLabel.Height/2);
+			Director.Instance.GL.Context.GetViewport().Width/2 - scoreLabel.Width/2,
+			Director.Instance.GL.Context.GetViewport().Height*0.1f - scoreLabel.Height/2);
 			panel.AddChildLast(scoreLabel);
 			uiScene.RootWidget.AddChildLast(panel);
 			UISystem.SetScene(uiScene);
@@ -80,6 +83,10 @@ namespace FlappyBird
 			//Create the flappy douche
 			bird = new Bird(gameScene);
 			
+			//menu = new Menu(gameScene);
+			
+			
+			
 			//Create some obstacles.
 			obstacles = new Obstacle[2];
 			obstacles[0] = new Obstacle(Director.Instance.GL.Context.GetViewport().Width*0.5f, gameScene);	
@@ -87,17 +94,22 @@ namespace FlappyBird
 			
 			//Run the scene.
 			Director.Instance.RunWithScene(gameScene, true);
+			
+			//Director.Instance.RunWithScene(new Menu());
 		}
 		
 		public static void Update()
 		{
-		scoreLabel.Text = Bird.scoreString;
+		//Menu.main(gameScene);
+		//scoreLabel.Text = Bird.scoreString;
 			//Determine whether the player tapped the screen
 			var touches = Touch.GetData(0);
 			//If tapped, inform the bird.
 			if(touches.Count > 0)
+			{
 				bird.Tapped();
-			
+			}
+		
 			//Update the bird.
 			bird.Update(0.0f);
 			
@@ -110,8 +122,19 @@ namespace FlappyBird
 				//Update the obstacles.
 				foreach(Obstacle obstacle in obstacles)
 					obstacle.Update(0.0f);
+				
+				foreach(Obstacle obstacle in obstacles)
+					obstacle.HasCollidedWith(bird.Bounds);
+				
+				//if statement for death on collide
+				if(obstacle.HasCollidedWith)
+				{
+					
+					
+					
+				}
+				
 			}
 		}
 		
-	}
-}
+}}

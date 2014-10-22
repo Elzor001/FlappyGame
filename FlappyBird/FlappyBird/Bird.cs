@@ -15,16 +15,21 @@ namespace FlappyBird
 		private static TextureInfo	textureInfo;
 		public static int			pushAmount = 70;
 		private static float		yPositionBeforePush;
-		private static bool			rise;
-		private static float		angle;
+		public static bool			rise;
+		public static float			angle;
 		private static bool			alive;
 		public static int 			score = 0;
 		public static string 		scoreString;
 		private static int			count;
 		public static float 		x;
 		public static float 		y;
+		public static string 		xText;
+		public static float 		width;
+		public static float 		height;
+		private Bounds2				birdBound;
 		
 		public bool Alive { get{return alive;} set{alive = value;} }
+		public Bounds2 Bounds { get{return birdBound;}}
 		
 		//Accessors.
 		//public SpriteUV Sprite { get{return sprite;} }
@@ -40,9 +45,13 @@ namespace FlappyBird
 			sprite.Quad.S 	= textureInfo.TextureSizef;
 			sprite.Position = new Vector2(50.0f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
 			//sprite.Pivot 	= new Vector2(0.5f,0.5f);
-			angle = 0.0f;
+			angle = 0.25f;
 			rise  = false;
 			alive = true;
+			
+			birdBound = sprite.Quad.Bounds2();
+			width  = birdBound.Point10.X;
+			height = birdBound.Point01.Y;
 			
 			//Add to the current scene.
 			scene.AddChild(sprite);
@@ -55,9 +64,11 @@ namespace FlappyBird
 		
 		public void Update(float deltaTime)
 		{		
+			pushAmount = 70;
 			scoreString = score.ToString();	
 			count ++;
 			Score ();
+			angle = 0.25f;
 			//adjust the push
 			if(rise)
 			{

@@ -16,8 +16,10 @@ namespace FlappyBird
 		private SpriteUV[] 	sprites;
 		private TextureInfo	textureInfoTop;
 		private TextureInfo	textureInfoBottom;
-		private float		width;
-		private float		height;
+		public static float		width;
+		public static float		height;
+		private Bounds2 		topBound;
+		private Bounds2 		botBound;
 		
 		//Accessors.
 		//public SpriteUV SpriteTop 	 { get{return sprites[0];} }
@@ -44,9 +46,10 @@ namespace FlappyBird
 			scene.AddChild(sprites[1]);
 			
 			//Get sprite bounds.
-			Bounds2 b = sprites[0].Quad.Bounds2();
-			width  = b.Point10.X;
-			height = b.Point01.Y;
+			topBound = sprites[0].Quad.Bounds2();
+			botBound = sprites[1].Quad.Bounds2();
+			width  = topBound.Point10.X;
+			height = topBound.Point01.Y;
 			
 			//Position pipes.
 			sprites[0].Position = new Vector2(startX,
@@ -63,8 +66,9 @@ namespace FlappyBird
 		
 		public void Update(float deltaTime)
 		{			
-			sprites[0].Position = new Vector2(sprites[0].Position.X - 3, sprites[0].Position.Y);
-			sprites[1].Position = new Vector2(sprites[1].Position.X - 3, sprites[1].Position.Y);
+			
+			sprites[0].Position = new Vector2(sprites[0].Position.X - 5, sprites[0].Position.Y);
+			sprites[1].Position = new Vector2(sprites[1].Position.X - 5, sprites[1].Position.Y);
 			
 			//If off the left of the viewport, loop them around.
 			if(sprites[0].Position.X < -width)
@@ -81,24 +85,24 @@ namespace FlappyBird
 		{
 			Random rand = new Random();
 			float randomPosition = (float)rand.NextDouble();
-			randomPosition += 0.45f;
+			randomPosition += 0.35f;
 			
 			if(randomPosition > 1.0f)
-				randomPosition = 0.9f;
+				randomPosition = 0.5f;
 		
 			return randomPosition;
 		}
 		
 		
-		public bool HasCollidedWith(SpriteUV sprite)
+		public bool HasCollidedWith(Bounds2 birdBound)
 		{
+			if(topBound.Overlaps(birdBound) || botBound.Overlaps(birdBound))
+				return true;
 			
-			
-			
-			
-			
-			
-			
+				//Bird.score += 100;
+		
+				
+		
 			return false;
 		}
 	}
